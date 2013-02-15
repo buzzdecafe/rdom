@@ -5,47 +5,10 @@
     var tags = [
         "div", "p", "table", "tr", "td", "th", "tbody", "thead", "tfoot", "span",
         "ul", "li", "a", "select", "option", "input", "button", "h1", "h2", "h3", "h4",
-        "body", "head", "dl", "dt", "dd", "em", "hr", "br", "ol", "strong", "sub", "sup",
-        "textarea", "title"
+        "body", "head", "em", "hr", "br", "ol", "strong", "sub", "sup", "textarea",
+        "title", "label"
     ];
     obj = obj || {};
-
-//    dom.el = function(tag) {
-//        return function(attrs) {
-//            attrs = attrs || {};
-//
-//            return function(children) {
-//                var elem = document.createElement(tag), prop;
-//
-//                for (prop in attrs) {
-//                    if (attrs.hasOwnProperty(prop)) {
-//                        elem.setAttribute(prop, attrs[prop]);
-//                    }
-//                }
-//
-//                if (children) {
-//                    if (!Array.isArray(children)) {
-//                        children = [children];
-//                    }
-//                }
-//                else {
-//                    children = [];
-//                }
-//
-//                children.forEach(function(child) {
-//                    if (typeof child === "string") {
-//                        elem.innerText += child;
-//                    }
-//                    else {
-//                        elem.appendChild(child);
-//                    }
-//                });
-//
-//                return elem;
-//            }
-//        }
-//    };
-
 
     dom.el = function(tag) {
         return function(attrs, children) {
@@ -91,5 +54,5 @@
     obj.dom = dom;
     return dom;
 
-}(obj));
+}(this));
 
