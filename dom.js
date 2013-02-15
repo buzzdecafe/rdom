@@ -1,5 +1,6 @@
 
 (function(obj) {
+    "use strict";
     var dom = {};
 
     var tags = [
@@ -12,8 +13,9 @@
 
     dom.el = function(tag) {
         return function(attrs, children) {
-            var attrArray = Array.isArray(attrs),
-                elem = document.createElement(tag), prop;
+            var elem, prop, attrArray = Array.isArray(attrs);
+
+            elem = (typeof tag === "string" ? document.createElement(tag) : tag);
 
             if (attrArray || typeof attrs === "string") {
                 children = attrArray ? attrs : [attrs];
@@ -43,7 +45,7 @@
                 }
             });
             return elem;
-        }
+        };
     };
 
     // initialize a bunch of popular tags
