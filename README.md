@@ -2,11 +2,9 @@ dom
 ----
 
 This is a simple object that simplifies DOM element creation, inspired by Christain Johnsen's
-talk [Pure, Functional JavaScript][].
+talk [Pure, Functional JavaScript](http://vimeo.com/43382919).
 
-    [Pure, Functional JavaScript]: http://vimeo.com/43382919
-
-He mentions a dom object that behaves like a DSL, and enables your to write code like this:
+Johansen mentions a dom object that behaves like a DSL, and enables you to write code like this:
 
     div({className: "moo"},
         ul({id: "cow"},[
