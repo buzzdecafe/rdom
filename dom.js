@@ -1,15 +1,11 @@
-
-(function(obj) {
+// var dom =
+(function() {
     "use strict";
     var dom = {};
-
     var tags = [
-        "div", "p", "table", "tr", "td", "th", "tbody", "thead", "tfoot", "span",
-        "ul", "li", "a", "select", "option", "input", "button", "h1", "h2", "h3", "h4",
-        "body", "head", "em", "hr", "br", "ol", "strong", "sub", "sup", "textarea",
-        "title", "label"
+        "div", "p", "table", "tr", "td", "th", "tbody", "thead", "tfoot", "span", "ul", "ol", "li",
+        "a", "select", "option", "input", "button", "h1", "h2", "h3", "h4", "textarea", "label"
     ];
-    obj = obj || {};
 
     dom.el = function(tag) {
         return function(attrs, children) {
@@ -48,13 +44,22 @@
         };
     };
 
+    dom.inputAndLabel = function(type, id, options, fn) {
+        var a = [];
+        fn = (fn && fn(a)) || function(opt) {
+            a.push(dom.input({type: type, id: id, name: opt.name, value: opt.value}));
+            a.push(dom.label({"for": id }, opt.text));
+        };
+        options.forEach(fn);
+        return a;
+    };
+
     // initialize a bunch of popular tags
     tags.forEach(function(tag) {
         dom[tag] = dom.el(tag);
     });
 
-    obj.dom = dom;
     return dom;
 
-}(this));
+}());
 
