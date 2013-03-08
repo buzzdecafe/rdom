@@ -1,5 +1,33 @@
-// var dom =
-(function() {
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// helper
+// naive shallow mixin function. good enough for now
+function merge(dest) {
+    "use strict";
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    args.forEach(function(obj) {
+        var prop;
+        for (prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                dest[prop] = obj[prop];
+            }
+        }
+    });
+
+    return dest;
+}
+
+
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// HERE BEGINETH THE SCRIPT
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+var dom = (function() {
     "use strict";
     var dom = {};
     var tags = [
@@ -7,51 +35,63 @@
         "a", "select", "option", "input", "button", "h1", "h2", "h3", "h4", "textarea", "label"
     ];
 
-    dom.el = function(tag) {
+    // helper functions
+    function arrOrStr(obj) {
+        return Array.isArray(obj) || typeof obj === "string";
+    }
+
+    function mkArr(obj) {
+        return (!!obj ? (Array.isArray(obj) ? obj : [obj]) : []);
+    }
+
+    function cfgElem(elem, attrs) {
+        var prop;
+        for (prop in attrs) {
+            if (attrs.hasOwnProperty(prop)) {
+                if (prop === "className" || prop === "innerHTML" || prop === "name" || prop === "title") {
+                    elem[prop] = attrs[prop];
+                } else {
+                    elem.setAttribute(prop, attrs[prop]);
+                }
+            }
+        }
+        return elem;
+    }
+
+    function mkChildren(elem, children) {
+        children.forEach(function(child) {
+            if (typeof child === "string") {
+                elem.innerText += child;
+            } else {
+                elem.appendChild(child);
+            }
+        });
+        return elem;
+    }
+
+
+    // the meaty part:
+    dom.el = function(tag, cfg) {
+        cfg = cfg || {};
         return function(attrs, children) {
-            var elem, prop, attrArray = Array.isArray(attrs);
+            var elem, prop;
 
             elem = (typeof tag === "string" ? document.createElement(tag) : tag);
 
-            if (attrArray || typeof attrs === "string") {
-                children = attrArray ? attrs : [attrs];
+            // sanity
+            if (arrOrStr(attrs)) {
+                children = mkArr(attrs);
                 attrs = {};
-            }
-            else if (children) {
-                children = Array.isArray(children) ? children : [children];
-            }
-
-            for (prop in attrs) {
-                if (attrs.hasOwnProperty(prop)) {
-                    if (prop === "className" || prop === "innerHTML" || prop === "name" || prop === "title") {
-                        elem[prop] = attrs[prop];
-                    }
-                    else {
-                        elem.setAttribute(prop, attrs[prop]);
-                    }
-                }
+            } else {
+                children = mkArr(children);
             }
 
-            children.forEach(function(child) {
-                if (typeof child === "string") {
-                    elem.innerText += child;
-                }
-                else {
-                    elem.appendChild(child);
-                }
-            });
+            elem = cfgElem(elem, attrs);
+            elem = mkChildren(elem, children);
+
+
             return elem;
         };
-    };
-
-    dom.inputAndLabel = function(type, id, options, fn) {
-        var a = [];
-        fn = (fn && fn(a)) || function(opt) {
-            a.push(dom.input({type: type, id: id, name: opt.name, value: opt.value}));
-            a.push(dom.label({"for": id }, opt.text));
-        };
-        options.forEach(fn);
-        return a;
     };
 
     // initialize a bunch of popular tags
@@ -62,4 +102,19 @@
     return dom;
 
 }());
+
+
+
+
+// example
+function inputAndLabel(type, id, options, fn) {
+    "use strict";
+    var a = [];
+    fn = (fn && fn(a)) || function(opt) {
+        a.push(dom.input({type: type, id: id, name: opt.name, value: opt.value}));
+        a.push(dom.label({"for": id }, opt.text));
+    };
+    options.forEach(fn);
+    return a;
+}
 
