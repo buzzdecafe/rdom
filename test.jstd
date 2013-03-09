@@ -1,9 +1,0 @@
-server: http://localhost:9876
-
-load:
-  - src/dom.js
-  - lib/jasmine.js
-  - lib/JasmineAdapter-1.1.2.js
-  - test/domSpec.js
-
-#test:
