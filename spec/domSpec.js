@@ -9,6 +9,16 @@ describe("dom", function() {
         expect(typeof dom.el).toBe("function");
     });
 
+    it("has several tags already partially applied and available on its interface", function() {
+        var tags = ["div", "p", "table", "tr", "td", "th", "tbody", "thead", "tfoot", "span",
+            "ul", "ol", "li", "a", "select", "option", "input", "button", "h1", "h2", "h3",
+            "h4", "textarea", "label"];
+        tags.forEach(function(tag) {
+            expect(typeof dom[tag]).toBe("function");
+        });
+
+    });
+
     describe("the el method: ", function() {
 
         it("takes a string and returns a function", function() {
@@ -56,7 +66,14 @@ describe("dom", function() {
                 expect(list.children[2]).toBe(kids[2]);
             });
 
+            it("appends any strings in the array to the parent element's innerText", function() {
+                var p = dom.el("p")(["moo ", dom.el("a")({href: "http://moocow.com"}, "cow"), ", moo"]);
+                expect(p.innerText).toMatch(/^moo\s.*, moo$/);
+            });
+
         });
     });
+
+
 /**/
 });
