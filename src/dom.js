@@ -1,28 +1,3 @@
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-// helper
-// naive shallow mixin function. good enough for now
-function merge(dest) {
-    "use strict";
-    var args = Array.prototype.slice.call(arguments, 1);
-
-    args.forEach(function(obj) {
-        var prop;
-        for (prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                dest[prop] = obj[prop];
-            }
-        }
-    });
-
-    return dest;
-}
-
-
-
-
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // HERE BEGINETH THE SCRIPT
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,7 +36,7 @@ var dom = (function() {
     function mkChildren(elem, children) {
         children.forEach(function(child) {
             if (typeof child === "string") {
-                elem.innerText += child;
+                elem.innerText = (elem.innerText ? elem.innerText + child : child);
             } else {
                 elem.appendChild(child);
             }
@@ -69,28 +44,40 @@ var dom = (function() {
         return elem;
     }
 
+    // helper
+    // naive shallow mixin function. good enough for now
+    function merge(dest) {
+        "use strict";
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        args.forEach(function(obj) {
+            var prop;
+            for (prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    dest[prop] = obj[prop];
+                }
+            }
+        });
+
+        return dest;
+    }
 
     // the meaty part:
     dom.el = function(tag, cfg) {
         cfg = cfg || {};
         return function(attrs, children) {
-            var elem, prop;
-
-            elem = (typeof tag === "string" ? document.createElement(tag) : tag);
+            var elem = (typeof tag === "string" ? document.createElement(tag) : tag);
 
             // sanity
             if (arrOrStr(attrs)) {
                 children = mkArr(attrs);
-                attrs = {};
+                attrs = cfg;
             } else {
                 children = mkArr(children);
             }
+            attrs = merge({}, cfg, attrs);
 
-            elem = cfgElem(elem, attrs);
-            elem = mkChildren(elem, children);
-
-
-            return elem;
+            return mkChildren(cfgElem(elem, attrs), children);
         };
     };
 
