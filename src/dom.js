@@ -36,7 +36,7 @@ var dom = (function() {
     function mkChildren(elem, children) {
         children.forEach(function(child) {
             if (typeof child === "string") {
-                elem.innerText = (elem.innerText ? elem.innerText + child : child);
+                elem.appendChild(document.createTextNode(child));
             } else {
                 elem.appendChild(child);
             }

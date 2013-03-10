@@ -50,9 +50,9 @@ describe("dom", function() {
                 expect(p.className).toEqual(override.className);
             });
 
-            it("takes a string and returns an element with its innerText set to that string", function() {
+            it("takes a string and returns an element with its text set to that string", function() {
                 var p = dom.el("p")("some text");
-                expect(p.innerText).toBe("some text");
+                expect(p.textContent).toBe("some text");
             });
 
             it("takes an array of elements and appends them to the returned element", function() {
@@ -66,9 +66,23 @@ describe("dom", function() {
                 expect(list.children[2]).toBe(kids[2]);
             });
 
-            it("appends any strings in the array to the parent element's innerText", function() {
+            it("appends any strings in the array to the parent element's text", function() {
                 var p = dom.el("p")(["moo ", dom.el("a")({href: "http://moocow.com"}, "cow"), ", moo"]);
-                expect(p.innerText).toMatch(/^moo\s.*, moo$/);
+                expect(p.textContent).toMatch(/^moo\s.*, moo$/);
+            });
+
+            it("may take a config object and a string for text", function() {
+                var a = dom.a({className: "moo", href: "/"}, "cow");
+                expect(a.className).toBe("moo");
+                expect(a.getAttribute("href")).toBe("/");
+                expect(a.textContent).toBe("cow");
+            });
+
+            it("may take a config object and an array of child objects and/or strings", function() {
+                var a = dom.a({href: "/", target: "_blank"}, ["one ", dom.span("two, "), dom.span("three "), "four"]);
+                expect(a.getAttribute('href')).toBe("/");
+                expect(a.textContent).toBe("one two, three four");
+                expect(a.childElementCount).toBe(2);
             });
 
         });
