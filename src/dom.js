@@ -47,7 +47,6 @@
     // helper
     // naive shallow mixin function. good enough for now
     function merge(dest) {
-        "use strict";
         var args = Array.prototype.slice.call(arguments, 1);
 
         args.forEach(function(obj) {
@@ -74,8 +73,8 @@
                 attrs = cfg;
             } else {
                 children = mkArr(children);
-            }
-            attrs = merge({}, cfg, attrs);
+                attrs = merge({}, cfg, attrs);
+            }            
 
             return mkChildren(cfgElem(elem, attrs), children);
         };
