@@ -74,7 +74,7 @@
             } else {
                 children = mkArr(children);
                 attrs = merge({}, cfg, attrs);
-            }            
+            }
 
             return mkChildren(cfgElem(elem, attrs), children);
         };
