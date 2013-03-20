@@ -2,7 +2,7 @@
 // HERE BEGINETH THE SCRIPT
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-var dom = (function() {
+(function(global) {
     "use strict";
     var dom = {};
     var tags = [
@@ -82,13 +82,22 @@ var dom = (function() {
     };
 
     // initialize a bunch of popular tags
-    tags.forEach(function(tag) {
-        dom[tag] = dom.el(tag);
-    });
+//    tags.forEach(function(tag) {
+//        dom[tag] = dom.el(tag);
+//    });
 
-    return dom;
+    dom.addAll = function(ctx) {
+        ctx = ctx || global;
+        tags.forEach(function(tag) {
+            ctx[tag] = dom.el(tag);
+        });
+    };
 
-}());
+    dom.addAll(dom);
+
+    global.dom = dom;
+
+}(this));
 
 
 

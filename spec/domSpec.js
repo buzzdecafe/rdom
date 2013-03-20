@@ -1,6 +1,8 @@
 /* jasmine 1.3.1 */
 describe("dom", function() {
 
+    var dom = window.dom;
+
     it("is defined", function() {
         expect(dom).toBeDefined();
     });
@@ -16,13 +18,13 @@ describe("dom", function() {
         tags.forEach(function(tag) {
             expect(typeof dom[tag]).toBe("function");
         });
-
     });
 
     describe("the el method: ", function() {
 
-        it("takes a string and returns a function", function() {
+        it("takes a string or DOM element and returns a function", function() {
             expect(typeof dom.el("li")).toBe("function");
+            expect(typeof dom.el(document.createElement("li"))).toBe("function");
         });
 
         it("may also take an optional configuration object", function() {
@@ -88,6 +90,13 @@ describe("dom", function() {
         });
     });
 
+    describe("the addAll method", function() {
+        it("adds tags to global object", function() {
+            dom.addAll();
+            expect(p).toBeDefined();
+            expect(div("text here").innerText).toBe("text here");
+        });
+    });
 
-/**/
 });
+
