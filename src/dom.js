@@ -80,11 +80,6 @@
         };
     };
 
-    // initialize a bunch of popular tags
-//    tags.forEach(function(tag) {
-//        dom[tag] = dom.el(tag);
-//    });
-
     dom.addAll = function(ctx) {
         ctx = ctx || global;
         tags.forEach(function(tag) {
