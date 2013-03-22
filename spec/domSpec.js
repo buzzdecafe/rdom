@@ -94,7 +94,23 @@ describe("dom", function() {
         it("adds tags to global object", function() {
             dom.addAll();
             expect(p).toBeDefined();
-            expect(div("text here").innerText).toBe("text here");
+            expect(div("text here").textContent).toBe("text here");
+        });
+
+        it("adds tags to the object supplied as an argument", function() {
+            var obj = {};
+            dom.addAll(obj);
+            expect(obj.p).toBeDefined();
+            expect(obj.div("text here").textContent).toBe("text here");
+        });
+
+        it("returns the global object or the object passed in as an argument", function() {
+            var obj = {}, rv = dom.addAll();
+            // returns global object
+            expect(rv).toBe(window);
+            rv = dom.addAll(obj);
+            // returns local object
+            expect(rv).toBe(obj);
         });
     });
 

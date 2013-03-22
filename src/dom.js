@@ -11,10 +11,6 @@
     ];
 
     // helper functions
-    function arrOrStr(obj) {
-        return Array.isArray(obj) || typeof obj === "string";
-    }
-
     function mkArr(obj) {
         return (!!obj ? (Array.isArray(obj) ? obj : [obj]) : []);
     }
@@ -68,7 +64,7 @@
             var elem = (typeof tag === "string" ? document.createElement(tag) : tag);
 
             // sanity
-            if (arrOrStr(attrs)) {
+            if (Array.isArray(attrs) || typeof attrs === "string" || attrs instanceof HTMLElement) {
                 children = mkArr(attrs);
                 attrs = cfg;
             } else {
@@ -85,6 +81,7 @@
         tags.forEach(function(tag) {
             ctx[tag] = dom.el(tag);
         });
+        return ctx;
     };
 
     dom.addAll(dom);
@@ -94,17 +91,4 @@
 }(this));
 
 
-
-
-// example
-function inputAndLabel(type, id, options, fn) {
-    "use strict";
-    var a = [];
-    fn = (fn && fn(a)) || function(opt) {
-        a.push(dom.input({type: type, id: id, name: opt.name, value: opt.value}));
-        a.push(dom.label({"for": id }, opt.text));
-    };
-    options.forEach(fn);
-    return a;
-}
 
