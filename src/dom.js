@@ -53,8 +53,11 @@
                 }
             }
         });
-
         return dest;
+    }
+
+    function isElem(obj) {
+        return obj instanceof HTMLElement || obj.nodeType === 1 || obj.nodeType === 3;
     }
 
     // the meaty part:
@@ -64,14 +67,13 @@
             var elem = (typeof tag === "string" ? document.createElement(tag) : tag);
 
             // sanity
-            if (Array.isArray(attrs) || typeof attrs === "string" || attrs instanceof HTMLElement) {
+            if (Array.isArray(attrs) || typeof attrs === "string" || isElem(attrs)) {
                 children = mkArr(attrs);
                 attrs = cfg;
             } else {
                 children = mkArr(children);
                 attrs = merge({}, cfg, attrs);
             }
-
             return mkChildren(cfgElem(elem, attrs), children);
         };
     };
@@ -83,7 +85,6 @@
         });
         return ctx;
     };
-
     dom.addAll(dom);
 
     global.dom = dom;
