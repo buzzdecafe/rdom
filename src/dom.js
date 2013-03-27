@@ -1,6 +1,3 @@
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// HERE BEGINETH THE SCRIPT
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (function(global) {
     "use strict";
@@ -57,7 +54,7 @@
     }
 
     function isElem(obj) {
-        return obj instanceof HTMLElement || obj.nodeType === 1 || obj.nodeType === 3;
+        return obj instanceof HTMLElement || (obj && (obj.nodeType === 1 || obj.nodeType === 3));
     }
 
     // the meaty part:
