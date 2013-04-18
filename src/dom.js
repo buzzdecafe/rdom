@@ -1,4 +1,3 @@
-
 (function(global) {
     "use strict";
     var dom = {};
@@ -6,17 +5,22 @@
         "div", "p", "table", "tr", "td", "th", "tbody", "thead", "tfoot", "span", "ul", "ol", "li",
         "a", "select", "option", "input", "button", "h1", "h2", "h3", "h4", "textarea", "label"
     ];
+    var elProps = ["className", "innerHTML", "name", "title"];
 
     // helper functions
     function mkArr(obj) {
         return (!!obj ? (Array.isArray(obj) ? obj : [obj]) : []);
+    }
+    
+    function isElProp(prop) {
+        return elProps.indexOf(prop) > -1;
     }
 
     function cfgElem(elem, attrs) {
         var prop;
         for (prop in attrs) {
             if (attrs.hasOwnProperty(prop)) {
-                if (prop === "className" || prop === "innerHTML" || prop === "name" || prop === "title") {
+                if (isElProp(prop)) {
                     elem[prop] = attrs[prop];
                 } else {
                     elem.setAttribute(prop, attrs[prop]);
