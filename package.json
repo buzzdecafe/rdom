@@ -1,6 +1,6 @@
 {
   "name": "rdom",
-  "version": "0.0.1",
+  "version": "0.4.0",
   "description": "more compositional dom interface",
   "main": "dist/rdom.js",
   "directories": {
@@ -11,6 +11,9 @@
     "build": "browserify -o dist/rdom.js -r ./src/rdom -s rdom",
     "postbuild": "uglifyjs dist/rdom.js -m -c unused=false -o dist/rdom.min.js",
     "lint": "eslint src/*.js test/*.js",
+    "release-patch": "xyz --repo git@github.com:buzzdecafe/rdom.git --increment patch",
+    "release-minor": "xyz --repo git@github.com:buzzdecafe/rdom.git --increment minor",
+    "release-major": "xyz --repo git@github.com:buzzdecafe/rdom.git --increment major",
     "test": "mocha --reporter spec"
   },
   "repository": {
