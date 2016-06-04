@@ -7,9 +7,10 @@
     "example": "example"
   },
   "scripts": {
-    "prebuild": "npm test",
+    "prebuild": "npm run lint; npm test",
     "build": "browserify -o dist/rdom.js -r ./src/rdom -s rdom",
     "postbuild": "uglifyjs dist/rdom.js -m -c unused=false -o dist/rdom.min.js",
+    "lint": "eslint src/*.js test/*.js",
     "test": "mocha --reporter spec"
   },
   "repository": {

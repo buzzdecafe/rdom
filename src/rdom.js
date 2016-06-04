@@ -1,5 +1,5 @@
 var tags = require('./tags');
-var elProps = ["className", "innerHTML", "name", "title"];
+var elProps = ['className', 'innerHTML', 'name', 'title'];
 
 // helper functions
 function isElProp(prop) {
@@ -22,7 +22,7 @@ function cfgElem(elem, attrs) {
 
 function mkChildren(elem, children) {
   return children.reduce(function(elm, child) {
-    if (typeof child === "string") {
+    if (typeof child === 'string') {
       elm.appendChild(document.createTextNode(child));
     } else {
       elm.appendChild(child);
@@ -33,32 +33,32 @@ function mkChildren(elem, children) {
 
 function rdom(tag, config, children) {
   switch (arguments.length) {
-    case 0:
-      return dom.el;
-    case 1:
-      return function _el1(conf, kids) {
-        switch (arguments.length) {
-          case 0: return _el1;
-          case 1: return function _el1_1(ks) {
-            var elem = document.createElement(tag);
-            return mkChildren(cfgElem(elem, conf), ks);
-          };
-          default: 
-            var elem = document.createElement(tag);
-            return mkChildren(cfgElem(elem, conf), kids);
-        }
-      };
-    case 2:
-      return function _el2(cs) {
-        if (arguments.length === 0) { return _el2; }
+  case 0:
+    return rdom;
+  case 1:
+    return function _el1(conf, kids) {
+      switch (arguments.length) {
+      case 0: return _el1;
+      case 1: return function _el1_1(ks) {
         var elem = document.createElement(tag);
-        return mkChildren(cfgElem(elem, config), cs);
+        return mkChildren(cfgElem(elem, conf), ks);
       };
-    default:
+      default: 
+        var elem = document.createElement(tag);
+        return mkChildren(cfgElem(elem, conf), kids);
+      }
+    };
+  case 2:
+    return function _el2(cs) {
+      if (arguments.length === 0) { return _el2; }
       var elem = document.createElement(tag);
-      return mkChildren(cfgElem(elem, config), children);
+      return mkChildren(cfgElem(elem, config), cs);
+    };
+  default:
+    var elem = document.createElement(tag);
+    return mkChildren(cfgElem(elem, config), children);
   }
-};
+}
 
 rdom.addTags = function _rdomAddTags(ts, dest) {
   return ts.reduce(function(acc, tagName) {
