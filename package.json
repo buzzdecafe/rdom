@@ -2,7 +2,7 @@
   "name": "rdom",
   "version": "0.0.1",
   "description": "more compositional dom interface",
-  "main": "index.js",
+  "main": "dist/rdom.js",
   "directories": {
     "example": "example"
   },
