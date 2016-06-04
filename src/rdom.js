@@ -53,7 +53,8 @@ function rdom(tag, config, children) {
         }
       };
     case 2:
-      return function(cs) {
+      return function _el2(cs) {
+        if (arguments.length === 0) { return _el2; }
         var elem = document.createElement(tag);
         return mkChildren(cfgElem(elem, config), cs);
       };
