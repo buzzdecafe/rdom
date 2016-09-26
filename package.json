@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prebuild": "npm run lint; npm test",
-    "build": "browserify -o dist/rdom.js -r ./src/rdom -s rdom",
+    "build": "browserify ./src/rdom -o dist/rdom.js -s rdom",
     "postbuild": "uglifyjs dist/rdom.js -m -c unused=false -o dist/rdom.min.js",
     "lint": "eslint src/*.js test/*.js",
     "release-patch": "xyz --repo git@github.com:buzzdecafe/rdom.git --increment patch",
