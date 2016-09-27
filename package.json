@@ -1,6 +1,6 @@
 {
   "name": "rdom",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "more compositional dom interface",
   "main": "dist/rdom.js",
   "directories": {
