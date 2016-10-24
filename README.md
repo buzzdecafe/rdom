@@ -36,5 +36,5 @@ This produces a DOM tree that looks like this:
 
 
 ------------------------------
-_Originally inspired by Christian Johansen's talk [Pure, Functional JavaScript](http://vimeo.com/43382919)._
+_Originally inspired by Christian Johansen's talk [Pure, Functional JavaScript](https://www.youtube.com/watch?v=zp6FP0-h-ag)._
 
